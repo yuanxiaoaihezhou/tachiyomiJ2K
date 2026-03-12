@@ -81,6 +81,14 @@ class PagerConfig(
             usePageTransitions = if (it) false else preferences.pageTransitions().get()
         })
 
+        preferences.einkRefreshMode()
+            .asFlow()
+            .drop(1)
+            .onEach {
+                // Rebuild adapter when refresh mode changes (to add/remove blank pages)
+                imagePropertyChangedListener?.invoke()
+            }.launchIn(scope)
+
         preferences.fullscreen().register({ isFullscreen = it })
 
         preferences

@@ -3,6 +3,7 @@ package eu.kanade.tachiyomi.ui.reader.viewer.pager
 import android.view.View
 import android.view.ViewGroup
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
+import eu.kanade.tachiyomi.ui.reader.model.EInkRefreshPage
 import eu.kanade.tachiyomi.ui.reader.model.InsertPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
@@ -353,6 +354,27 @@ class PagerViewerAdapter(
 
             this.joinedItems = subJoinedItems
         }
+
+        // E-ink insert blank pages mode: insert two white EInkRefreshPages between content pages
+        if (viewer.config.einkRefreshMode == 2) {
+            val result = mutableListOf<Pair<Any, Any?>>()
+            for (i in joinedItems.indices) {
+                result.add(joinedItems[i])
+                // After each content page (except the last item), insert two blank pages
+                if (joinedItems[i].first is ReaderPage &&
+                    joinedItems[i].first !is EInkRefreshPage &&
+                    i + 1 < joinedItems.size &&
+                    joinedItems[i + 1].first is ReaderPage &&
+                    joinedItems[i + 1].first !is EInkRefreshPage
+                ) {
+                    val parentPage = joinedItems[i].first as ReaderPage
+                    result.add(Pair(EInkRefreshPage(parentPage), null))
+                    result.add(Pair(EInkRefreshPage(parentPage), null))
+                }
+            }
+            this.joinedItems = result
+        }
+
         notifyDataSetChanged()
 
         // Step 6: Move back to our previous page or transition page

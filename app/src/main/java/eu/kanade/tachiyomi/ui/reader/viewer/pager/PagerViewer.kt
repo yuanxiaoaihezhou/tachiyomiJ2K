@@ -1,10 +1,14 @@
 package eu.kanade.tachiyomi.ui.reader.viewer.pager
 
+import android.graphics.Color
 import android.graphics.PointF
+import android.os.Handler
+import android.os.Looper
 import android.view.InputDevice
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import androidx.core.view.children
 import androidx.core.view.isVisible
@@ -13,6 +17,7 @@ import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.data.download.DownloadManager
 import eu.kanade.tachiyomi.ui.reader.ReaderActivity
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
+import eu.kanade.tachiyomi.ui.reader.model.EInkRefreshPage
 import eu.kanade.tachiyomi.ui.reader.model.InsertPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
@@ -34,6 +39,21 @@ abstract class PagerViewer(
     val downloadManager: DownloadManager by injectLazy()
 
     val scope = MainScope()
+
+    /**
+     * Handler for scheduling e-ink flash refresh sequences on the main thread.
+     */
+    private val handler = Handler(Looper.getMainLooper())
+
+    /**
+     * Overlay view used for the e-ink simulated full refresh (flash black/white).
+     */
+    private var flashOverlay: View? = null
+
+    /**
+     * Whether a flash refresh sequence is currently running.
+     */
+    private var isFlashing = false
 
     /**
      * View pager used by this viewer. It's abstract to implement L2R, R2L and vertical pagers on
@@ -169,6 +189,11 @@ abstract class PagerViewer(
 
     override fun destroy() {
         super.destroy()
+        handler.removeCallbacksAndMessages(null)
+        flashOverlay?.let {
+            (it.parent as? ViewGroup)?.removeView(it)
+        }
+        flashOverlay = null
         scope.cancel()
     }
 
@@ -187,6 +212,8 @@ abstract class PagerViewer(
         val page = adapter.joinedItems.getOrNull(position)
         if (page != null && currentPage != page) {
             val pageF = page.first
+            // Skip e-ink refresh pages for page tracking - they are just blank pages
+            if (pageF is EInkRefreshPage) return
             val allowPreload = checkAllowPreload(pageF as? ReaderPage)
             val forward =
                 // if both pages have the same number, it's a split page with an InsertPage
@@ -421,7 +448,7 @@ abstract class PagerViewer(
             if (holder != null && config.navigateToPan && holder.canPanRight()) {
                 holder.panRight()
             } else {
-                pager.setCurrentItem(pager.currentItem + 1, config.usePageTransitions)
+                navigateWithEInkRefresh { pager.setCurrentItem(pager.currentItem + 1, config.usePageTransitions) }
             }
         }
     }
@@ -436,9 +463,64 @@ abstract class PagerViewer(
             if (holder != null && config.navigateToPan && holder.canPanLeft()) {
                 holder.panLeft()
             } else {
-                pager.setCurrentItem(pager.currentItem - 1, config.usePageTransitions)
+                navigateWithEInkRefresh { pager.setCurrentItem(pager.currentItem - 1, config.usePageTransitions) }
             }
         }
+    }
+
+    /**
+     * Wraps a page navigation action with e-ink simulated full refresh (flash black/white)
+     * if the refresh mode is set to "simulated full refresh" (mode 1).
+     * The overlay flashes black → white → black → white before executing the navigation.
+     */
+    private fun navigateWithEInkRefresh(navigate: () -> Unit) {
+        if (config.einkRefreshMode != 1 || isFlashing) {
+            navigate()
+            return
+        }
+        isFlashing = true
+        val overlay = getOrCreateFlashOverlay()
+        overlay.visibility = View.VISIBLE
+
+        // Flash sequence: black → white → black → white → navigate → hide overlay
+        val flashDelay = 50L // 50ms per flash step for fast full refresh
+        overlay.setBackgroundColor(Color.BLACK)
+        handler.postDelayed({
+            overlay.setBackgroundColor(Color.WHITE)
+            handler.postDelayed({
+                overlay.setBackgroundColor(Color.BLACK)
+                handler.postDelayed({
+                    overlay.setBackgroundColor(Color.WHITE)
+                    handler.postDelayed({
+                        navigate()
+                        handler.postDelayed({
+                            overlay.visibility = View.GONE
+                            isFlashing = false
+                        }, flashDelay)
+                    }, flashDelay)
+                }, flashDelay)
+            }, flashDelay)
+        }, flashDelay)
+    }
+
+    /**
+     * Creates or retrieves the flash overlay view for e-ink simulated full refresh.
+     */
+    private fun getOrCreateFlashOverlay(): View {
+        flashOverlay?.let { return it }
+        val overlay = View(activity).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+            )
+            setBackgroundColor(Color.BLACK)
+            visibility = View.GONE
+            elevation = Float.MAX_VALUE // Ensure overlay is on top
+        }
+        // Add to the pager's parent (the viewer container in ReaderActivity)
+        (pager.parent as? ViewGroup)?.addView(overlay) ?: activity.binding.viewerContainer.addView(overlay)
+        flashOverlay = overlay
+        return overlay
     }
 
     /**

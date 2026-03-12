@@ -238,4 +238,6 @@ object PreferenceKeys {
     const val chaptersDescAsDefault = "chapters_desc_as_default"
 
     const val einkMode = "pref_eink_mode"
+
+    const val einkRefreshMode = "pref_eink_refresh_mode"
 }

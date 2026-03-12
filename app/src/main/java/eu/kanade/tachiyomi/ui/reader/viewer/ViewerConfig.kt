@@ -29,6 +29,8 @@ abstract class ViewerConfig(
 
     var einkMode = false
 
+    var einkRefreshMode = 0
+
     var navigationOverlayForNewUser = false
     var navigationMode = 0
         protected set
@@ -58,6 +60,10 @@ abstract class ViewerConfig(
                 // When e-ink mode changes, update animation duration
                 doubleTapAnimDuration = EInkHelper.getRecommendedAnimDuration(it, preferences.doubleTapAnimSpeed().get())
             })
+
+        preferences
+            .einkRefreshMode()
+            .register({ einkRefreshMode = it })
 
         preferences
             .readWithVolumeKeys()
