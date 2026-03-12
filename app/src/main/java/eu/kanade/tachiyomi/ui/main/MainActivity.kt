@@ -799,7 +799,8 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
     ) {
         super.onTitleChanged(title, color)
         binding.searchToolbar.title = searchTitle
-        val onExpandedController = if (this::router.isInitialized) router.backstack.lastOrNull()?.controller !is SmallToolbarInterface else false
+        val onExpandedController =
+            if (this::router.isInitialized) router.backstack.lastOrNull()?.controller !is SmallToolbarInterface else false
         binding.appBar.setTitle(title, onExpandedController)
     }
 

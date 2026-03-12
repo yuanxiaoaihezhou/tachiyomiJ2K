@@ -114,7 +114,14 @@ class ExtensionInstallBroadcast : BroadcastReceiver() {
                     PackageInstaller.STATUS_SUCCESS -> {
                         extensionManager.setInstallationResult(downloadId, true)
                     }
-                    PackageInstaller.STATUS_FAILURE, PackageInstaller.STATUS_FAILURE_ABORTED, PackageInstaller.STATUS_FAILURE_BLOCKED, PackageInstaller.STATUS_FAILURE_CONFLICT, PackageInstaller.STATUS_FAILURE_INCOMPATIBLE, PackageInstaller.STATUS_FAILURE_INVALID, PackageInstaller.STATUS_FAILURE_STORAGE -> {
+                    PackageInstaller.STATUS_FAILURE,
+                    PackageInstaller.STATUS_FAILURE_ABORTED,
+                    PackageInstaller.STATUS_FAILURE_BLOCKED,
+                    PackageInstaller.STATUS_FAILURE_CONFLICT,
+                    PackageInstaller.STATUS_FAILURE_INCOMPATIBLE,
+                    PackageInstaller.STATUS_FAILURE_INVALID,
+                    PackageInstaller.STATUS_FAILURE_STORAGE,
+                    -> {
                         extensionManager.setInstallationResult(downloadId, false)
                         if (status != PackageInstaller.STATUS_FAILURE_ABORTED) {
                             if (status == PackageInstaller.STATUS_FAILURE_CONFLICT) {

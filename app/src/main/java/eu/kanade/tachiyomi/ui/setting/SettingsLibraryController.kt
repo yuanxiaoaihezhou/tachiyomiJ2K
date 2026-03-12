@@ -33,14 +33,14 @@ class SettingsLibraryController : SettingsController() {
             preferenceCategory {
                 titleRes = R.string.general
                 switchPreference {
-                    key = Keys.removeArticles
+                    key = Keys.REMOVE_ARTICLES
                     titleRes = R.string.sort_by_ignoring_articles
                     summaryRes = R.string.when_sorting_ignore_articles
                     defaultValue = false
                 }
 
                 switchPreference {
-                    key = Keys.showLibrarySearchSuggestions
+                    key = Keys.SHOW_LIBRARY_SEARCH_SUGGESTIONS
                     titleRes = R.string.search_suggestions
                     summaryRes = R.string.search_tips_show_periodically
 
@@ -83,7 +83,7 @@ class SettingsLibraryController : SettingsController() {
                     onClick { router.pushController(CategoryController().withFadeTransaction()) }
                 }
                 intListPreference(activity) {
-                    key = Keys.defaultCategory
+                    key = Keys.DEFAULT_CATEGORY
                     titleRes = R.string.default_category
 
                     val categories = listOf(Category.createDefault(context)) + dbCategories
@@ -113,7 +113,7 @@ class SettingsLibraryController : SettingsController() {
             preferenceCategory {
                 titleRes = R.string.global_updates
                 intListPreference(activity) {
-                    key = Keys.libraryUpdateInterval
+                    key = Keys.LIBRARY_UPDATE_INTERVAL
                     titleRes = R.string.library_update_frequency
                     entriesRes =
                         arrayOf(
@@ -185,7 +185,7 @@ class SettingsLibraryController : SettingsController() {
                 }
 
                 switchPreference {
-                    key = Keys.refreshCoversToo
+                    key = Keys.REFRESH_COVERS_TOO
                     titleRes = R.string.auto_refresh_covers
                     summaryRes = R.string.auto_refresh_covers_summary
                     defaultValue = true

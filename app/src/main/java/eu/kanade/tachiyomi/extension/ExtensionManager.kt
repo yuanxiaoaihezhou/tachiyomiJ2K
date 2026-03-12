@@ -57,7 +57,7 @@ class ExtensionManager(
 
     private val iconMap = mutableMapOf<String, Drawable>()
 
-    val downloadSharedFlow = installer.downloadSharedFlow
+    val downloadsSharedFlow = installer.downloadsSharedFlow
 
     private fun getExtension(downloadId: Long): String? =
         installer.activeDownloads.entries

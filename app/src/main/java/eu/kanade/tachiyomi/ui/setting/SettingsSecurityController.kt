@@ -16,7 +16,7 @@ class SettingsSecurityController : SettingsController() {
 
             if (context.isAuthenticationSupported()) {
                 switchPreference {
-                    key = PreferenceKeys.useBiometrics
+                    key = PreferenceKeys.USE_BIOMETRICS
                     titleRes = R.string.lock_with_biometrics
                     defaultValue = false
 
@@ -27,7 +27,7 @@ class SettingsSecurityController : SettingsController() {
                     )
                 }
                 intListPreference(activity) {
-                    key = PreferenceKeys.lockAfter
+                    key = PreferenceKeys.LOCK_AFTER
                     titleRes = R.string.lock_when_idle
                     val values = listOf(0, 2, 5, 10, 20, 30, 60, 90, 120, -1)
                     entries =
@@ -51,7 +51,7 @@ class SettingsSecurityController : SettingsController() {
             }
 
             switchPreference {
-                key = PreferenceKeys.hideNotificationContent
+                key = PreferenceKeys.HIDE_NOTIFICATION_CONTENT
                 titleRes = R.string.hide_notification_content
                 defaultValue = false
             }

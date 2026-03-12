@@ -637,7 +637,7 @@ class Downloader(
             tmpDir.listFiles().orEmpty().count {
                 val fileName = it.name.orEmpty()
                 when {
-                    fileName in listOf(/*COMIC_INFO_FILE, */NOMEDIA_FILE) -> false
+                    fileName in listOf(NOMEDIA_FILE) -> false // COMIC_INFO_FILE
                     fileName.endsWith(".tmp") -> false
                     // Only count the first split page and not the others
                     fileName.contains("__") && !fileName.endsWith("__001.jpg") -> false

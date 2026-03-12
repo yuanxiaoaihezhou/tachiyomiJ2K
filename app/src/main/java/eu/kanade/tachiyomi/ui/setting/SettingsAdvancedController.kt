@@ -284,7 +284,7 @@ class SettingsAdvancedController : SettingsController() {
                     }
                 }
                 intListPreference(activity) {
-                    key = PreferenceKeys.dohProvider
+                    key = PreferenceKeys.DOH_PROVIDER
                     titleRes = R.string.doh
                     entriesRes =
                         arrayOf(
@@ -357,13 +357,13 @@ class SettingsAdvancedController : SettingsController() {
                     onChange {
                         it as Int
                         if (it == ExtensionInstaller.SHIZUKU) {
-                            return@onChange if (!context.isPackageInstalled(ShizukuInstaller.shizukuPkgName) && !Sui.isSui()) {
+                            return@onChange if (!context.isPackageInstalled(ShizukuInstaller.SHIZUKU_PKG_NAME) && !Sui.isSui()) {
                                 context
                                     .materialAlertDialog()
                                     .setTitle(R.string.ext_installer_shizuku)
                                     .setMessage(R.string.ext_installer_shizuku_unavailable_dialog)
                                     .setPositiveButton(R.string.download) { _, _ ->
-                                        openInBrowser(ShizukuInstaller.downloadLink)
+                                        openInBrowser(ShizukuInstaller.DOWNLOAD_LINK)
                                     }.setNegativeButton(android.R.string.cancel, null)
                                     .show()
                                 false

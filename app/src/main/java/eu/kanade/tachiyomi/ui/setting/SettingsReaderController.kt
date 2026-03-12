@@ -30,14 +30,14 @@ class SettingsReaderController : SettingsController() {
                 titleRes = R.string.eink
 
                 switchPreference {
-                    key = Keys.einkMode
+                    key = Keys.EINK_MODE
                     titleRes = R.string.eink_mode
                     summaryRes = R.string.eink_mode_summary
                     defaultValue = false
                 }
 
                 intListPreference(activity) {
-                    key = Keys.einkRefreshMode
+                    key = Keys.EINK_REFRESH_MODE
                     titleRes = R.string.eink_refresh_mode
                     entriesRes =
                         arrayOf(
@@ -53,7 +53,7 @@ class SettingsReaderController : SettingsController() {
             preferenceCategory {
                 titleRes = R.string.general
                 intListPreference(activity) {
-                    key = Keys.defaultReadingMode
+                    key = Keys.DEFAULT_READING_MODE
                     titleRes = R.string.default_reading_mode
                     entriesRes =
                         ReadingModeType.entries
@@ -67,7 +67,7 @@ class SettingsReaderController : SettingsController() {
                     defaultValue = 2
                 }
                 intListPreference(activity) {
-                    key = Keys.doubleTapAnimationSpeed
+                    key = Keys.DOUBLE_TAP_ANIMATION_SPEED
                     titleRes = R.string.double_tap_anim_speed
                     entries =
                         listOf(
@@ -82,20 +82,20 @@ class SettingsReaderController : SettingsController() {
                     defaultValue = 500
                 }
                 switchPreference {
-                    key = Keys.enableTransitions
+                    key = Keys.ENABLE_TRANSITIONS
                     titleRes = R.string.animate_page_transitions
                     defaultValue = true
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     switchPreference {
-                        key = Keys.trueColor
+                        key = Keys.TRUE_COLOR
                         titleRes = R.string.true_32bit_color
                         summaryRes = R.string.reduces_banding_impacts_performance
                         defaultValue = false
                     }
                 }
                 intListPreference(activity) {
-                    key = Keys.preloadSize
+                    key = Keys.PRELOAD_SIZE
                     titleRes = R.string.page_preload_amount
                     entryValues = listOf(4, 6, 8, 10, 12, 14, 16, 20)
                     entries = entryValues.map { context.resources.getQuantityString(R.plurals.pages_plural, it, it) }
@@ -103,7 +103,7 @@ class SettingsReaderController : SettingsController() {
                     summaryRes = R.string.amount_of_pages_to_preload
                 }
                 multiSelectListPreferenceMat(activity) {
-                    key = Keys.readerBottomButtons
+                    key = Keys.READER_BOTTOM_BUTTONS
                     titleRes = R.string.display_buttons_bottom_reader
                     val enumConstants = ReaderBottomButton.entries
                     entriesRes = ReaderBottomButton.entries.map { it.stringRes }.toTypedArray()
@@ -124,7 +124,7 @@ class SettingsReaderController : SettingsController() {
                 titleRes = R.string.display
 
                 intListPreference(activity) {
-                    key = Keys.defaultOrientationType
+                    key = Keys.DEFAULT_ORIENTATION_TYPE
                     titleRes = R.string.default_orientation
                     val enumConstants = OrientationType.entries.drop(1)
                     entriesRes = enumConstants.map { it.stringRes }.toTypedArray()
@@ -132,7 +132,7 @@ class SettingsReaderController : SettingsController() {
                     defaultValue = OrientationType.FREE.flagValue
                 }
                 intListPreference(activity) {
-                    key = Keys.readerTheme
+                    key = Keys.READER_THEME
                     titleRes = R.string.background_color
                     val enumConstants = ReaderBackgroundColor.entries
                     entriesRes = enumConstants.map { it.longStringRes ?: it.stringRes }.toTypedArray()
@@ -140,17 +140,17 @@ class SettingsReaderController : SettingsController() {
                     defaultValue = ReaderBackgroundColor.SMART_PAGE.prefValue
                 }
                 switchPreference {
-                    key = Keys.fullscreen
+                    key = Keys.FULLSCREEN
                     titleRes = R.string.fullscreen
                     defaultValue = true
                 }
                 switchPreference {
-                    key = Keys.keepScreenOn
+                    key = Keys.KEEP_SCREEN_ON
                     titleRes = R.string.keep_screen_on
                     defaultValue = true
                 }
                 switchPreference {
-                    key = Keys.showPageNumber
+                    key = Keys.SHOW_PAGE_NUMBER
                     titleRes = R.string.show_page_number
                     defaultValue = true
                 }
@@ -180,12 +180,12 @@ class SettingsReaderController : SettingsController() {
                 titleRes = R.string.reading
 
                 switchPreference {
-                    key = Keys.skipRead
+                    key = Keys.SKIP_READ
                     titleRes = R.string.skip_read_chapters
                     defaultValue = false
                 }
                 switchPreference {
-                    key = Keys.skipFiltered
+                    key = Keys.SKIP_FILTERED
                     titleRes = R.string.skip_filtered_chapters
                     defaultValue = true
                 }
@@ -194,7 +194,7 @@ class SettingsReaderController : SettingsController() {
                     titleRes = R.string.skip_dupe_chapters
                 }
                 switchPreference {
-                    key = Keys.alwaysShowChapterTransition
+                    key = Keys.ALWAYS_SHOW_CHAPTER_TRANSITION
                     titleRes = R.string.always_show_chapter_transition
                     summaryRes = R.string.if_disabled_transition_will_skip
                     defaultValue = true
@@ -205,7 +205,7 @@ class SettingsReaderController : SettingsController() {
                 titleRes = R.string.paged
 
                 intListPreference(activity) {
-                    key = Keys.navigationModePager
+                    key = Keys.NAVIGATION_MODE_PAGER
                     titleRes = R.string.tap_zones
                     entries =
                         context.resources
@@ -216,7 +216,7 @@ class SettingsReaderController : SettingsController() {
                     defaultValue = "0"
                 }
                 listPreference(activity) {
-                    key = Keys.pagerNavInverted
+                    key = Keys.PAGER_NAV_INVERTED
                     titleRes = R.string.invert_tapping
                     entriesRes =
                         arrayOf(
@@ -236,7 +236,7 @@ class SettingsReaderController : SettingsController() {
                 }
 
                 intListPreference(activity) {
-                    key = Keys.imageScaleType
+                    key = Keys.IMAGE_SCALE_TYPE
                     titleRes = R.string.scale_type
                     entriesRes =
                         arrayOf(
@@ -252,7 +252,7 @@ class SettingsReaderController : SettingsController() {
                 }
 
                 intListPreference(activity) {
-                    key = Keys.pagerCutoutBehavior
+                    key = Keys.PAGER_CUTOUT_BEHAVIOR
                     titleRes = R.string.cutout_area_behavior
                     entriesRes =
                         arrayOf(
@@ -306,7 +306,7 @@ class SettingsReaderController : SettingsController() {
                     visibleIf(preferences.imageScaleType()) { it == 1 }
                 }
                 intListPreference(activity) {
-                    key = Keys.zoomStart
+                    key = Keys.ZOOM_START
                     titleRes = R.string.zoom_start_position
                     entriesRes =
                         arrayOf(
@@ -319,7 +319,7 @@ class SettingsReaderController : SettingsController() {
                     defaultValue = 1
                 }
                 switchPreference {
-                    key = Keys.cropBorders
+                    key = Keys.CROP_BORDERS
                     titleRes = R.string.crop_borders
                     defaultValue = false
                 }
@@ -328,7 +328,7 @@ class SettingsReaderController : SettingsController() {
                     titleRes = R.string.navigate_pan
                 }
                 intListPreference(activity) {
-                    key = Keys.pageLayout
+                    key = Keys.PAGE_LAYOUT
                     title = context.getString(R.string.page_layout).addBetaTag(context)
                     dialogTitleRes = R.string.page_layout
                     val enumConstants = PageLayout.entries
@@ -340,13 +340,13 @@ class SettingsReaderController : SettingsController() {
                     preferences.pageLayout().asImmediateFlowIn(viewScope) { isVisible = it == PageLayout.AUTOMATIC.value }
                 }
                 switchPreference {
-                    key = Keys.automaticSplitsPage
+                    key = Keys.AUTOMATIC_SPLITS_PAGE
                     titleRes = R.string.split_double_pages_portrait
                     defaultValue = false
                     preferences.pageLayout().asImmediateFlowIn(viewScope) { isVisible = it == PageLayout.AUTOMATIC.value }
                 }
                 switchPreference {
-                    key = Keys.invertDoublePages
+                    key = Keys.INVERT_DOUBLE_PAGES
                     titleRes = R.string.invert_double_pages
                     defaultValue = false
                     preferences.pageLayout().asImmediateFlowIn(viewScope) { isVisible = it != PageLayout.SINGLE_PAGE.value }
@@ -356,7 +356,7 @@ class SettingsReaderController : SettingsController() {
                 titleRes = R.string.webtoon
 
                 intListPreference(activity) {
-                    key = Keys.navigationModeWebtoon
+                    key = Keys.NAVIGATION_MODE_WEBTOON
                     titleRes = R.string.tap_zones
                     entries =
                         context.resources
@@ -367,7 +367,7 @@ class SettingsReaderController : SettingsController() {
                     defaultValue = "0"
                 }
                 listPreference(activity) {
-                    key = Keys.webtoonNavInverted
+                    key = Keys.WEBTOON_NAV_INVERTED
                     titleRes = R.string.invert_tapping
                     entriesRes =
                         arrayOf(
@@ -393,13 +393,13 @@ class SettingsReaderController : SettingsController() {
                     entryValues = enumValues.map { it.name }
                 }
                 switchPreference {
-                    key = Keys.cropBordersWebtoon
+                    key = Keys.CROP_BORDERS_WEBTOON
                     titleRes = R.string.crop_borders
                     defaultValue = false
                 }
 
                 intListPreference(activity) {
-                    key = Keys.webtoonSidePadding
+                    key = Keys.WEBTOON_SIDE_PADDING
                     titleRes = R.string.pref_webtoon_side_padding
                     entriesRes =
                         arrayOf(
@@ -415,7 +415,7 @@ class SettingsReaderController : SettingsController() {
                 }
 
                 intListPreference(activity) {
-                    key = Keys.webtoonPageLayout
+                    key = Keys.WEBTOON_PAGE_LAYOUT
                     title = context.getString(R.string.page_layout)
                     dialogTitleRes = R.string.page_layout
                     val enumConstants = arrayOf(PageLayout.SINGLE_PAGE, PageLayout.SPLIT_PAGES)
@@ -425,13 +425,13 @@ class SettingsReaderController : SettingsController() {
                 }
 
                 switchPreference {
-                    key = Keys.webtoonInvertDoublePages
+                    key = Keys.WEBTOON_INVERT_DOUBLE_PAGES
                     titleRes = R.string.invert_double_pages
                     defaultValue = false
                 }
 
                 switchPreference {
-                    key = Keys.webtoonEnableZoomOut
+                    key = Keys.WEBTOON_ENABLE_ZOOM_OUT
                     titleRes = R.string.enable_zoom_out
                     defaultValue = false
                 }
@@ -440,12 +440,12 @@ class SettingsReaderController : SettingsController() {
                 titleRes = R.string.navigation
 
                 switchPreference {
-                    key = Keys.readWithVolumeKeys
+                    key = Keys.READ_WITH_VOLUME_KEYS
                     titleRes = R.string.volume_keys
                     defaultValue = false
                 }
                 switchPreference {
-                    key = Keys.readWithVolumeKeysInverted
+                    key = Keys.READ_WITH_VOLUME_KEYS_INVERTED
                     titleRes = R.string.invert_volume_keys
                     defaultValue = false
 
@@ -457,7 +457,7 @@ class SettingsReaderController : SettingsController() {
                 titleRes = R.string.actions
 
                 switchPreference {
-                    key = Keys.readWithLongTap
+                    key = Keys.READ_WITH_LONG_TAP
                     titleRes = R.string.show_on_long_press
                     defaultValue = true
                 }

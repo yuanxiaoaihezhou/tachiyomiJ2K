@@ -70,7 +70,7 @@ class SettingsAppearanceController : SettingsController() {
                 }
 
                 switchPreference {
-                    key = Keys.themeDarkAmoled
+                    key = Keys.THEME_DARK_AMOLED
                     titleRes = R.string.pure_black_dark_mode
                     defaultValue = false
 
@@ -120,7 +120,7 @@ class SettingsAppearanceController : SettingsController() {
             preferenceCategory {
                 titleRes = R.string.details_page
                 switchPreference {
-                    key = Keys.themeMangaDetails
+                    key = Keys.THEME_MANGA_DETAILS
                     titleRes = R.string.theme_buttons_based_on_cover
                     defaultValue = true
                 }
@@ -130,14 +130,14 @@ class SettingsAppearanceController : SettingsController() {
                 titleRes = R.string.navigation
 
                 switchPreference {
-                    key = Keys.hideBottomNavOnScroll
+                    key = Keys.HIDE_BOTTOM_NAV_ON_SCROLL
                     titleRes = R.string.hide_bottom_nav
                     summaryRes = R.string.hides_on_scroll
                     defaultValue = true
                 }
 
                 intListPreference(activity) {
-                    key = Keys.sideNavIconAlignment
+                    key = Keys.SIDE_NAV_ICON_ALIGNMENT
                     titleRes = R.string.side_nav_icon_alignment
                     entriesRes = arrayOf(R.string.top, R.string.center, R.string.bottom)
                     entryRange = 0..2
@@ -149,7 +149,7 @@ class SettingsAppearanceController : SettingsController() {
                 }
 
                 intListPreference(activity) {
-                    key = Keys.sideNavMode
+                    key = Keys.SIDE_NAV_MODE
                     titleRes = R.string.use_side_navigation
                     val values = SideNavMode.entries
                     entriesRes = values.map { it.stringRes }.toTypedArray()
