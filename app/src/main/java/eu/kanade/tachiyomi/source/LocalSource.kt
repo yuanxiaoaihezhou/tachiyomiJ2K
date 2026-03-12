@@ -239,8 +239,7 @@ class LocalSource(
         file.writeText(json.encodeToString(manga.toJson(lang)))
     }
 
-    private fun SManga.toJson(lang: String?): MangaJson =
-        MangaJson(title, author, artist, description, genre?.split(", ")?.toTypedArray(), status, lang)
+    private fun SManga.toJson(lang: String?): MangaJson = MangaJson(title, author, artist, description, genre?.split(", ")?.toTypedArray(), status, lang)
 
     @Serializable
     data class MangaJson(

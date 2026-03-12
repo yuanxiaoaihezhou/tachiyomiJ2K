@@ -219,8 +219,7 @@ class DownloadBottomSheet
          * @param download the download to find.
          * @return the holder of the download or null if it's not bound.
          */
-        private fun getHolder(download: Download): DownloadHolder? =
-            binding.dlRecycler.findViewHolderForItemId(download.chapter.id!!) as? DownloadHolder
+        private fun getHolder(download: Download): DownloadHolder? = binding.dlRecycler.findViewHolderForItemId(download.chapter.id!!) as? DownloadHolder
 
         /**
          * Set information view when queue is empty

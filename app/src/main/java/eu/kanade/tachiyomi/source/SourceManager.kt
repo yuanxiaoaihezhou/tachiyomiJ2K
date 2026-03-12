@@ -96,8 +96,7 @@ class SourceManager(
 
     fun isDelegatedSource(source: Source): Boolean = delegatedSources.values.count { it.sourceId == source.id } > 0
 
-    fun getDelegatedSource(urlName: String): DelegatedHttpSource? =
-        delegatedSources.values.find { it.urlName == urlName }?.delegatedHttpSource
+    fun getDelegatedSource(urlName: String): DelegatedHttpSource? = delegatedSources.values.find { it.urlName == urlName }?.delegatedHttpSource
 
     fun getOnlineSources() = sourcesMapFlow.value.values.filterIsInstance<HttpSource>()
 

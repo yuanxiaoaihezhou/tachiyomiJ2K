@@ -41,14 +41,11 @@ inline fun PreferenceManager.newScreen(block: (@DSL PreferenceScreen).() -> Unit
 
 inline fun PreferenceGroup.preference(block: (@DSL Preference).() -> Unit): Preference = initThenAdd(Preference(context), block)
 
-inline fun PreferenceGroup.themePreference(block: (@DSL ThemePreference).() -> Unit): ThemePreference =
-    initThenAdd(ThemePreference(context), block)
+inline fun PreferenceGroup.themePreference(block: (@DSL ThemePreference).() -> Unit): ThemePreference = initThenAdd(ThemePreference(context), block)
 
-inline fun PreferenceGroup.switchPreference(block: (@DSL SwitchPreferenceCompat).() -> Unit): SwitchPreferenceCompat =
-    initThenAdd(SwitchPreferenceCompat(context), block)
+inline fun PreferenceGroup.switchPreference(block: (@DSL SwitchPreferenceCompat).() -> Unit): SwitchPreferenceCompat = initThenAdd(SwitchPreferenceCompat(context), block)
 
-inline fun PreferenceGroup.checkBoxPreference(block: (@DSL CheckBoxPreference).() -> Unit): CheckBoxPreference =
-    initThenAdd(CheckBoxPreference(context), block)
+inline fun PreferenceGroup.checkBoxPreference(block: (@DSL CheckBoxPreference).() -> Unit): CheckBoxPreference = initThenAdd(CheckBoxPreference(context), block)
 
 inline fun PreferenceGroup.editTextPreference(
     activity: Activity?,
@@ -57,8 +54,7 @@ inline fun PreferenceGroup.editTextPreference(
     return initThenAdd(EditTextResetPreference(activity, context), block) // .also(::initDialog)
 }
 
-inline fun PreferenceGroup.dropDownPreference(block: (@DSL DropDownPreference).() -> Unit): DropDownPreference =
-    initThenAdd(DropDownPreference(context), block).also(::initDialog)
+inline fun PreferenceGroup.dropDownPreference(block: (@DSL DropDownPreference).() -> Unit): DropDownPreference = initThenAdd(DropDownPreference(context), block).also(::initDialog)
 
 inline fun PreferenceGroup.listPreference(
     activity: Activity?,
@@ -81,11 +77,9 @@ inline fun PreferenceGroup.triStateListPreference(
     block: (@DSL TriStateListPreference).() -> Unit,
 ): TriStateListPreference = initThenAdd(TriStateListPreference(activity, context), block)
 
-inline fun PreferenceScreen.preferenceCategory(block: (@DSL PreferenceCategory).() -> Unit): PreferenceCategory =
-    addThenInit(AdaptiveTitlePreferenceCategory(context), block)
+inline fun PreferenceScreen.preferenceCategory(block: (@DSL PreferenceCategory).() -> Unit): PreferenceCategory = addThenInit(AdaptiveTitlePreferenceCategory(context), block)
 
-inline fun PreferenceScreen.switchPreference(block: (@DSL SwitchPreferenceCompat).() -> Unit): SwitchPreferenceCompat =
-    initThenAdd(SwitchPreferenceCompat(context), block)
+inline fun PreferenceScreen.switchPreference(block: (@DSL SwitchPreferenceCompat).() -> Unit): SwitchPreferenceCompat = initThenAdd(SwitchPreferenceCompat(context), block)
 
 fun PreferenceGroup.infoPreference(
     @StringRes infoRes: Int,
@@ -99,8 +93,7 @@ fun PreferenceGroup.infoPreference(
         isSelectable = false
     }
 
-inline fun PreferenceScreen.preferenceScreen(block: (@DSL PreferenceScreen).() -> Unit): PreferenceScreen =
-    addThenInit(preferenceManager.createPreferenceScreen(context), block)
+inline fun PreferenceScreen.preferenceScreen(block: (@DSL PreferenceScreen).() -> Unit): PreferenceScreen = addThenInit(preferenceManager.createPreferenceScreen(context), block)
 
 fun initDialog(dialogPreference: DialogPreference) {
     with(dialogPreference) {

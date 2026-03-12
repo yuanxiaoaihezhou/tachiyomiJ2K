@@ -17,43 +17,44 @@ import timber.log.Timber
  * - RAM: 4+64GB
  */
 object EInkHelper {
-
     /**
      * Known e-ink device manufacturers (lowercase).
      */
-    private val EINK_MANUFACTURERS = setOf(
-        "bigme",
-        "onyx",
-        "boox",
-        "hisense",
-        "dasung",
-        "remarkable",
-        "kobo",
-        "pocketbook",
-        "hanvon",
-        "boyue",
-        "likebook",
-        "supernote",
-        "moan",
-        "meebook",
-    )
+    private val EINK_MANUFACTURERS =
+        setOf(
+            "bigme",
+            "onyx",
+            "boox",
+            "hisense",
+            "dasung",
+            "remarkable",
+            "kobo",
+            "pocketbook",
+            "hanvon",
+            "boyue",
+            "likebook",
+            "supernote",
+            "moan",
+            "meebook",
+        )
 
     /**
      * Known e-ink device model patterns (lowercase).
      */
-    private val EINK_MODEL_PATTERNS = setOf(
-        "ocean",
-        "kaleido",
-        "boox",
-        "hisense",
-        "a5pro",
-        "a7cc",
-        "a9",
-        "dasung",
-        "remarkable",
-        "inkpad",
-        "inkpalm",
-    )
+    private val EINK_MODEL_PATTERNS =
+        setOf(
+            "ocean",
+            "kaleido",
+            "boox",
+            "hisense",
+            "a5pro",
+            "a7cc",
+            "a9",
+            "dasung",
+            "remarkable",
+            "inkpad",
+            "inkpalm",
+        )
 
     /**
      * Detects if the current device is likely an e-ink device based on manufacturer
@@ -95,7 +96,7 @@ object EInkHelper {
             val get = systemProperties.getDeclaredMethod("get", String::class.java)
             val einkProp = get.invoke(null, "ro.hardware.eink") as? String
             val epdProp = get.invoke(null, "ro.hardware.epd") as? String
-            !einkProp.isNullOrEmpty() || !epdProp.isNullOrEmpty()
+            einkProp.isNullOrEmpty().not() || epdProp.isNullOrEmpty().not()
         } catch (e: Exception) {
             false
         }
@@ -105,8 +106,10 @@ object EInkHelper {
      * For e-ink: returns 1ms (near-instant, avoids 0 which may break some views).
      * For regular devices: returns the provided default value.
      */
-    fun getRecommendedAnimDuration(einkModeEnabled: Boolean, default: Int = 500): Int =
-        if (einkModeEnabled) 1 else default // 1ms = near-instant, 0 may break some views
+    fun getRecommendedAnimDuration(
+        einkModeEnabled: Boolean,
+        default: Int = 500,
+    ): Int = if (einkModeEnabled) 1 else default // 1ms = near-instant, 0 may break some views
 
     /**
      * Whether page transitions should be used.
@@ -118,23 +121,30 @@ object EInkHelper {
      * Whether the keep-screen-on flag should be set.
      * E-ink displays consume no power to maintain an image, so keeping screen on is unnecessary.
      */
-    fun shouldKeepScreenOn(einkModeEnabled: Boolean, userPreference: Boolean): Boolean =
-        if (einkModeEnabled) false else userPreference
+    fun shouldKeepScreenOn(
+        einkModeEnabled: Boolean,
+        userPreference: Boolean,
+    ): Boolean = if (einkModeEnabled) false else userPreference
 
     /**
      * Gets a reduced preload size for e-ink devices to save memory and battery.
      * Kaleido 3 devices have limited RAM (4GB) and battery (3000mAh).
      * Returns null for non-e-ink mode (use default).
      */
-    fun getRecommendedPreloadSize(einkModeEnabled: Boolean, userPreference: Int): Int =
-        if (einkModeEnabled) userPreference.coerceAtMost(4) else userPreference
+    fun getRecommendedPreloadSize(
+        einkModeEnabled: Boolean,
+        userPreference: Int,
+    ): Int = if (einkModeEnabled) userPreference.coerceAtMost(4) else userPreference
 
     /**
      * Apply e-ink optimized window flags.
      * Ensures system bar backgrounds are drawn by the window rather than the system,
      * which helps reduce visual artifacts on e-ink displays.
      */
-    fun applyEInkWindowFlags(window: android.view.Window, einkModeEnabled: Boolean) {
+    fun applyEInkWindowFlags(
+        window: android.view.Window,
+        einkModeEnabled: Boolean,
+    ) {
         if (einkModeEnabled) {
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS,
