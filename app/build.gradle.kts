@@ -100,7 +100,7 @@ android {
 
     productFlavors {
         create("standard") {
-            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
+            buildConfigField("Boolean", "INCLUDE_UPDATER", "false")
         }
         create("dev") {
             androidResources.localeFilters.clear()
