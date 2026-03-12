@@ -469,6 +469,13 @@ abstract class PagerViewer(
     }
 
     /**
+     * Delay in milliseconds for each step in the e-ink flash refresh sequence.
+     */
+    private companion object {
+        const val EINK_FLASH_STEP_DELAY_MS = 50L
+    }
+
+    /**
      * Wraps a page navigation action with e-ink simulated full refresh (flash black/white)
      * if the refresh mode is set to "simulated full refresh" (mode 1).
      * The overlay flashes black → white → black → white before executing the navigation.
@@ -483,7 +490,6 @@ abstract class PagerViewer(
         overlay.visibility = View.VISIBLE
 
         // Flash sequence: black → white → black → white → navigate → hide overlay
-        val flashDelay = 50L // 50ms per flash step for fast full refresh
         overlay.setBackgroundColor(Color.BLACK)
         handler.postDelayed({
             overlay.setBackgroundColor(Color.WHITE)
@@ -496,11 +502,11 @@ abstract class PagerViewer(
                         handler.postDelayed({
                             overlay.visibility = View.GONE
                             isFlashing = false
-                        }, flashDelay)
-                    }, flashDelay)
-                }, flashDelay)
-            }, flashDelay)
-        }, flashDelay)
+                        }, EINK_FLASH_STEP_DELAY_MS)
+                    }, EINK_FLASH_STEP_DELAY_MS)
+                }, EINK_FLASH_STEP_DELAY_MS)
+            }, EINK_FLASH_STEP_DELAY_MS)
+        }, EINK_FLASH_STEP_DELAY_MS)
     }
 
     /**
@@ -515,10 +521,10 @@ abstract class PagerViewer(
             )
             setBackgroundColor(Color.BLACK)
             visibility = View.GONE
-            elevation = Float.MAX_VALUE // Ensure overlay is on top
         }
         // Add to the pager's parent (the viewer container in ReaderActivity)
         (pager.parent as? ViewGroup)?.addView(overlay) ?: activity.binding.viewerContainer.addView(overlay)
+        overlay.bringToFront()
         flashOverlay = overlay
         return overlay
     }

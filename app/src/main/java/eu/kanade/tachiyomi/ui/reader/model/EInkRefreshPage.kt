@@ -18,6 +18,9 @@ class EInkRefreshPage(
         fullPage = true
         firstHalf = null
         stream = null
+        // Set status to READY immediately since this page has no image to load.
+        // PagerPageHolder checks this status to skip the image loading pipeline
+        // and simply displays a white background.
         status = State.READY
     }
 }

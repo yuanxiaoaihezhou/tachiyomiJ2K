@@ -359,17 +359,19 @@ class PagerViewerAdapter(
         if (viewer.config.einkRefreshMode == 2) {
             val result = mutableListOf<Pair<Any, Any?>>()
             for (i in joinedItems.indices) {
-                result.add(joinedItems[i])
+                val currentItem = joinedItems[i]
+                val currentFirst = currentItem.first
+                result.add(currentItem)
                 // After each content page (except the last item), insert two blank pages
-                if (joinedItems[i].first is ReaderPage &&
-                    joinedItems[i].first !is EInkRefreshPage &&
-                    i + 1 < joinedItems.size &&
-                    joinedItems[i + 1].first is ReaderPage &&
-                    joinedItems[i + 1].first !is EInkRefreshPage
+                if (currentFirst is ReaderPage &&
+                    currentFirst !is EInkRefreshPage &&
+                    i + 1 < joinedItems.size
                 ) {
-                    val parentPage = joinedItems[i].first as ReaderPage
-                    result.add(Pair(EInkRefreshPage(parentPage), null))
-                    result.add(Pair(EInkRefreshPage(parentPage), null))
+                    val nextFirst = joinedItems[i + 1].first
+                    if (nextFirst is ReaderPage && nextFirst !is EInkRefreshPage) {
+                        result.add(Pair(EInkRefreshPage(currentFirst), null))
+                        result.add(Pair(EInkRefreshPage(currentFirst), null))
+                    }
                 }
             }
             this.joinedItems = result
