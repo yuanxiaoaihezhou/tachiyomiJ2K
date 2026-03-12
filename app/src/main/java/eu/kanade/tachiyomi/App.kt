@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -76,6 +77,14 @@ open class App :
             .nightMode()
             .asImmediateFlow { AppCompatDelegate.setDefaultNightMode(it) }
             .launchIn(ProcessLifecycleOwner.get().lifecycleScope)
+
+        // Restore app language from preferences on startup
+        val appLanguage = preferences.appLanguage().get()
+        if (appLanguage.isNotBlank()) {
+            AppCompatDelegate.setApplicationLocales(
+                LocaleListCompat.forLanguageTags(appLanguage),
+            )
+        }
 
         ProcessLifecycleOwner.get().lifecycleScope.launchIO {
             with(TachiyomiWidgetManager()) { this@App.init() }
