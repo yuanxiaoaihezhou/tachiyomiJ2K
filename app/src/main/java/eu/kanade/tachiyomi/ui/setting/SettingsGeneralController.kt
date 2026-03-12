@@ -222,9 +222,7 @@ class SettingsGeneralController : SettingsController() {
                                     preferences.appLanguage().delete()
                                     LocaleListCompat.getEmptyLocaleList()
                                 } else {
-                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                                        preferences.appLanguage().set(value)
-                                    }
+                                    preferences.appLanguage().set(value)
                                     LocaleListCompat.forLanguageTags(value)
                                 }
                             AppCompatDelegate.setApplicationLocales(appLocale)

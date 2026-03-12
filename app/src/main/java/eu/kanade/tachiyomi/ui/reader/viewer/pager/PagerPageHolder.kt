@@ -129,10 +129,12 @@ class PagerPageHolder(
             setBackgroundColor(Color.WHITE)
             progressBar.isVisible = false
         } else {
-            addView(progressBar)
-            if (viewer.config.hingeGapSize > 0) {
-                progressBar.updateLayoutParams<MarginLayoutParams> {
-                    marginStart = ((context.resources.displayMetrics.widthPixels) / 2 + viewer.config.hingeGapSize) / 2
+            if (!viewer.config.einkMode) {
+                addView(progressBar)
+                if (viewer.config.hingeGapSize > 0) {
+                    progressBar.updateLayoutParams<MarginLayoutParams> {
+                        marginStart = ((context.resources.displayMetrics.widthPixels) / 2 + viewer.config.hingeGapSize) / 2
+                    }
                 }
             }
             launchLoadJob()
@@ -142,16 +144,18 @@ class PagerPageHolder(
                     else -> ThemeUtil.readerBackgroundColor(theme)
                 },
             )
-            progressBar.foregroundTintList =
-                ColorStateList.valueOf(
-                    context.getResourceColor(
-                        if (isInvertedFromTheme()) {
-                            R.attr.colorPrimaryInverse
-                        } else {
-                            R.attr.colorPrimary
-                        },
-                    ),
-                )
+            if (!viewer.config.einkMode) {
+                progressBar.foregroundTintList =
+                    ColorStateList.valueOf(
+                        context.getResourceColor(
+                            if (isInvertedFromTheme()) {
+                                R.attr.colorPrimaryInverse
+                            } else {
+                                R.attr.colorPrimary
+                            },
+                        ),
+                    )
+            }
         }
     }
 

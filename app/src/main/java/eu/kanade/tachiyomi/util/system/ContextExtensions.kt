@@ -462,7 +462,6 @@ fun Context.getApplicationIcon(pkgName: String): Drawable? =
 /** Context used for notifications as Appcompat app lang does not support notifications */
 val Context.localeContext: Context
     get() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) return this
         val pref = Injekt.get<PreferencesHelper>()
         val prefsLang =
             if (pref.appLanguage().isSet()) {
@@ -480,9 +479,7 @@ val Context.localeContext: Context
     }
 
 fun setLocaleByAppCompat() {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-        AppCompatDelegate.getApplicationLocales().get(0)?.let { Locale.setDefault(it) }
-    }
+    AppCompatDelegate.getApplicationLocales().get(0)?.let { Locale.setDefault(it) }
 }
 
 suspend fun CoroutineWorker.tryToSetForeground() {
