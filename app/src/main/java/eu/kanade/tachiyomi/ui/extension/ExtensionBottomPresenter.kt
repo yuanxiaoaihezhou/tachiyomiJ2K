@@ -51,7 +51,7 @@ class ExtensionBottomPresenter : BaseMigrationPresenter<ExtensionBottomSheet>() 
             listOf(migrationJob, extensionJob).awaitAll()
         }
         presenterScope.launch {
-            extensionManager.downloadSharedFlow
+            extensionManager.downloadsSharedFlow
                 .collect {
                     if (it.first.startsWith("Finished") || it.first.startsWith("Uninstalled")) {
                         if (it.first.startsWith("Finished")) {

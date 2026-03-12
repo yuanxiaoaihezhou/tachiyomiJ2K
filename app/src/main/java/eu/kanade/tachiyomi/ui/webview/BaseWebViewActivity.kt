@@ -98,6 +98,7 @@ open class BaseWebViewActivity : BaseActivity<WebviewActivityBinding>() {
 
         ViewCompat.setOnApplyWindowInsetsListener(content) { v, insets ->
             // if pure white theme on a device that does not support dark status bar
+
             /*if (getResourceColor(android.R.attr.statusBarColor) != Color.TRANSPARENT)
                 window.statusBarColor = Color.BLACK
             else window.statusBarColor = getResourceColor(R.attr.colorPrimary)*/

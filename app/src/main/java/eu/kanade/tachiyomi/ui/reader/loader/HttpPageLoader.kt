@@ -49,7 +49,7 @@ class HttpPageLoader(
                 }
             }.filter { it.status == Page.State.QUEUE }
                 .collect {
-                    _loadPage(it)
+                    fetchPage(it)
                 }
         }
     }
@@ -192,7 +192,7 @@ class HttpPageLoader(
      *
      * @param page the page whose source image has to be downloaded.
      */
-    private suspend fun _loadPage(page: ReaderPage) {
+    private suspend fun fetchPage(page: ReaderPage) {
         try {
             if (page.imageUrl.isNullOrEmpty()) {
                 page.status = Page.State.LOAD_PAGE

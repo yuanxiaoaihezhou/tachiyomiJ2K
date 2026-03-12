@@ -29,7 +29,7 @@ class SettingsDownloadController : SettingsController() {
             titleRes = R.string.downloads
 
             preference {
-                key = Keys.downloadsDirectory
+                key = Keys.DOWNLOADS_DIRECTORY
                 titleRes = R.string.download_location
                 onClick {
                     DownloadDirectoriesDialog(this@SettingsDownloadController).show()
@@ -41,7 +41,7 @@ class SettingsDownloadController : SettingsController() {
                 }
             }
             switchPreference {
-                key = Keys.downloadOnlyOverWifi
+                key = Keys.DOWNLOAD_ONLY_OVER_WIFI
                 titleRes = R.string.only_download_over_wifi
                 defaultValue = true
             }
@@ -62,7 +62,7 @@ class SettingsDownloadController : SettingsController() {
                 titleRes = R.string.remove_after_read
 
                 switchPreference {
-                    key = Keys.removeAfterMarkedAsRead
+                    key = Keys.REMOVE_AFTER_MARKED_AS_READ
                     titleRes = R.string.remove_when_marked_as_read
                     defaultValue = false
                 }

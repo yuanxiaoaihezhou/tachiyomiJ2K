@@ -101,7 +101,7 @@ internal class ExtensionInstaller(
      * StateFlow used to notify the installation step of every download.
      */
     private val _downloadsSharedFlow = MutableSharedFlow<Pair<String, ExtensionIntallInfo>>()
-    val downloadSharedFlow = _downloadsSharedFlow.asSharedFlow()
+    val downloadsSharedFlow = _downloadsSharedFlow.asSharedFlow()
 
     /** Map of download id to installer session id */
     val downloadInstallerMap = hashMapOf<String, Int>()

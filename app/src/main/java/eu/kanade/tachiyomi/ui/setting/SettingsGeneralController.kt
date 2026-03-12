@@ -30,7 +30,7 @@ class SettingsGeneralController : SettingsController() {
             titleRes = R.string.general
 
             intListPreference(activity) {
-                key = Keys.startingTab
+                key = Keys.STARTING_TAB
                 titleRes = R.string.starting_screen
                 summaryRes =
                     when (preferences.startingTab().get()) {
@@ -73,7 +73,7 @@ class SettingsGeneralController : SettingsController() {
             }
 
             switchPreference {
-                key = Keys.backToStart
+                key = Keys.BACK_TO_START
                 titleRes = R.string.back_to_start
                 summaryRes = R.string.pressing_back_to_start
                 defaultValue = true
@@ -96,20 +96,20 @@ class SettingsGeneralController : SettingsController() {
                 titleRes = R.string.app_shortcuts
 
                 switchPreference {
-                    key = Keys.showSeriesInShortcuts
+                    key = Keys.SHOW_SERIES_IN_SHORTCUTS
                     titleRes = R.string.show_recent_series
                     summaryRes = R.string.includes_recently_read_updated_added
                     defaultValue = true
                 }
 
                 switchPreference {
-                    key = Keys.showSourcesInShortcuts
+                    key = Keys.SHOW_SOURCES_IN_SHORTCUTS
                     titleRes = R.string.show_recent_sources
                     defaultValue = true
                 }
 
                 switchPreference {
-                    key = Keys.openChapterInShortcuts
+                    key = Keys.OPEN_CHAPTER_IN_SHORTCUTS
                     titleRes = R.string.series_opens_new_chapters
                     summaryRes = R.string.no_new_chapters_open_details
                     defaultValue = true
@@ -121,7 +121,7 @@ class SettingsGeneralController : SettingsController() {
                     titleRes = R.string.auto_updates
 
                     intListPreference(activity) {
-                        key = Keys.shouldAutoUpdate
+                        key = Keys.SHOULD_AUTO_UPDATE
                         titleRes = R.string.auto_update_app
                         entryRange = 0..2
                         entriesRes = arrayOf(R.string.over_any_network, R.string.over_wifi_only, R.string.dont_auto_update)
@@ -133,7 +133,7 @@ class SettingsGeneralController : SettingsController() {
             preferenceCategory {
                 titleRes = R.string.locale
                 listPreference(activity) {
-                    key = Keys.dateFormat
+                    key = Keys.DATE_FORMAT
                     titleRes = R.string.date_format
                     entryValues = listOf("", "MM/dd/yy", "dd/MM/yy", "yyyy-MM-dd")
                     entries =

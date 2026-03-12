@@ -125,7 +125,7 @@ object Migrations {
                 val wasDohEnabled = prefs.getBoolean("enable_doh", false)
                 if (wasDohEnabled) {
                     prefs.edit {
-                        putInt(PreferenceKeys.dohProvider, PREF_DOH_CLOUDFLARE)
+                        putInt(PreferenceKeys.DOH_PROVIDER, PREF_DOH_CLOUDFLARE)
                         remove("enable_doh")
                     }
                 }
@@ -148,8 +148,8 @@ object Migrations {
                 val wasShortcutsDisabled = !prefs.getBoolean("show_manga_app_shortcuts", true)
                 if (wasShortcutsDisabled) {
                     prefs.edit {
-                        putBoolean(PreferenceKeys.showSourcesInShortcuts, false)
-                        putBoolean(PreferenceKeys.showSeriesInShortcuts, false)
+                        putBoolean(PreferenceKeys.SHOW_SOURCES_IN_SHORTCUTS, false)
+                        putBoolean(PreferenceKeys.SHOW_SERIES_IN_SHORTCUTS, false)
                         remove("show_manga_app_shortcuts")
                     }
                 }

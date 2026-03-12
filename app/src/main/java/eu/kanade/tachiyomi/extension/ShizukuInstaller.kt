@@ -243,8 +243,8 @@ class ShizukuInstaller(
     )
 
     companion object {
-        const val shizukuPkgName = "moe.shizuku.privileged.api"
-        const val downloadLink = "https://shizuku.rikka.app/download"
+        const val SHIZUKU_PKG_NAME = "moe.shizuku.privileged.api"
+        const val DOWNLOAD_LINK = "https://shizuku.rikka.app/download"
         private const val SHIZUKU_PERMISSION_REQUEST_CODE = 14045
         private val SESSION_ID_REGEX = Regex("(?<=\\[).+?(?=])")
 

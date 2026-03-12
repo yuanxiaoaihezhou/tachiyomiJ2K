@@ -17,12 +17,12 @@ object ThemeUtil {
     /** Migration method */
     fun convertNewThemes(context: Context) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val lightTheme = prefs.getString(PreferenceKeys.lightTheme, "DEFAULT")
-        val darkTheme = prefs.getString(PreferenceKeys.darkTheme, "DEFAULT")
+        val lightTheme = prefs.getString(PreferenceKeys.LIGHT_THEME, "DEFAULT")
+        val darkTheme = prefs.getString(PreferenceKeys.DARK_THEME, "DEFAULT")
 
         prefs.edit {
             putString(
-                PreferenceKeys.lightTheme,
+                PreferenceKeys.LIGHT_THEME,
                 when (lightTheme) {
                     "SPRING" -> Themes.SPRING_AND_DUSK
                     "STRAWBERRY_DAIQUIRI" -> Themes.STRAWBERRIES
@@ -30,7 +30,7 @@ object ThemeUtil {
                 }?.name,
             )
             putString(
-                PreferenceKeys.darkTheme,
+                PreferenceKeys.DARK_THEME,
                 when (darkTheme) {
                     "DUSK" -> Themes.SPRING_AND_DUSK
                     "CHOCOLATE_STRAWBERRIES" -> Themes.STRAWBERRIES

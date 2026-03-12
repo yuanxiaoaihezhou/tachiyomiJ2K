@@ -757,7 +757,7 @@ class RecentsPresenter(
         }
 
         const val ENDLESS_LIMIT = 50
-        var SHORT_LIMIT = 25
+        var shortLimit = 25
             private set
 
         suspend fun getRecentManga(

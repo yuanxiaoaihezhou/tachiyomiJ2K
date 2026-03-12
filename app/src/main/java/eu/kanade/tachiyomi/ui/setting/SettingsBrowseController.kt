@@ -41,7 +41,7 @@ class SettingsBrowseController : SettingsController() {
             preferenceCategory {
                 titleRes = R.string.extensions
                 switchPreference {
-                    key = PreferenceKeys.automaticExtUpdates
+                    key = PreferenceKeys.AUTOMATIC_EXT_UPDATES
                     titleRes = R.string.check_for_extension_updates
                     defaultValue = true
 
@@ -63,7 +63,7 @@ class SettingsBrowseController : SettingsController() {
                 if (ExtensionManager.canAutoInstallUpdates()) {
                     val intPref =
                         intListPreference(activity) {
-                            key = PreferenceKeys.autoUpdateExtensions
+                            key = PreferenceKeys.AUTO_UPDATE_EXTENSIONS
                             titleRes = R.string.auto_update_extensions
                             entryRange = 0..2
                             entriesRes =
@@ -119,7 +119,7 @@ class SettingsBrowseController : SettingsController() {
             preferenceCategory {
                 titleRes = R.string.pref_global_search
                 switchPreference {
-                    key = PreferenceKeys.onlySearchPinned
+                    key = PreferenceKeys.ONLY_SEARCH_PINNED
                     titleRes = R.string.only_search_pinned_when
                 }
             }
@@ -138,7 +138,7 @@ class SettingsBrowseController : SettingsController() {
                         .isSet()
                 ) {
                     switchPreference {
-                        key = PreferenceKeys.skipPreMigration
+                        key = PreferenceKeys.SKIP_PRE_MIGRATION
                         titleRes = R.string.skip_pre_migration
                         summaryRes = R.string.use_last_saved_migration_preferences
                         defaultValue = false
@@ -200,7 +200,7 @@ class SettingsBrowseController : SettingsController() {
                 titleRes = R.string.nsfw_sources
 
                 switchPreference {
-                    key = PreferenceKeys.showNsfwSource
+                    key = PreferenceKeys.SHOW_NSFW_SOURCE
                     titleRes = R.string.show_in_sources_and_extensions
                     summaryRes = R.string.requires_app_restart
                     defaultValue = true
