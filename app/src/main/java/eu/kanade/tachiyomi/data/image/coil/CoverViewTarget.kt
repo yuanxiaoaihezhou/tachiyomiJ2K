@@ -7,13 +7,18 @@ import androidx.core.view.isVisible
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import coil.target.ImageViewTarget
 import eu.kanade.tachiyomi.R
+import eu.kanade.tachiyomi.data.preference.PreferencesHelper
 import eu.kanade.tachiyomi.util.system.getResourceColor
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 
 class CoverViewTarget(
     view: ImageView,
     val progress: View? = null,
     val scaleType: ImageView.ScaleType = ImageView.ScaleType.CENTER_CROP,
 ) : ImageViewTarget(view) {
+    private val isEinkMode = Injekt.get<PreferencesHelper>().einkMode().get()
+
     override fun onError(error: Drawable?) {
         progress?.isVisible = false
         view.scaleType = ImageView.ScaleType.CENTER
@@ -28,7 +33,9 @@ class CoverViewTarget(
     }
 
     override fun onStart(placeholder: Drawable?) {
-        progress?.isVisible = true
+        if (!isEinkMode) {
+            progress?.isVisible = true
+        }
         view.scaleType = scaleType
         super.onStart(placeholder)
     }

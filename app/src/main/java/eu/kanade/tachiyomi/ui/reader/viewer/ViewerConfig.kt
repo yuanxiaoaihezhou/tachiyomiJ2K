@@ -27,9 +27,9 @@ abstract class ViewerConfig(
     var volumeKeysInverted = false
     var alwaysShowChapterTransition = true
 
-    var einkMode = false
+    var einkMode = preferences.einkMode().get()
 
-    var einkRefreshMode = 0
+    var einkRefreshMode = preferences.einkRefreshMode().get()
 
     var navigationOverlayForNewUser = false
     var navigationMode = 0

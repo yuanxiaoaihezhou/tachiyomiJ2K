@@ -207,8 +207,10 @@ class WebtoonPageHolder(
      * Called when the page is queued.
      */
     private fun setQueued() {
-        progressContainer.isVisible = true
-        progressBar.isVisible = true
+        if (!viewer.config.einkMode) {
+            progressContainer.isVisible = true
+            progressBar.isVisible = true
+        }
         removeErrorLayout()
     }
 
@@ -216,8 +218,10 @@ class WebtoonPageHolder(
      * Called when the page is loading.
      */
     private fun setLoading() {
-        progressContainer.isVisible = true
-        progressBar.isVisible = true
+        if (!viewer.config.einkMode) {
+            progressContainer.isVisible = true
+            progressBar.isVisible = true
+        }
         removeErrorLayout()
     }
 
@@ -225,8 +229,10 @@ class WebtoonPageHolder(
      * Called when the page is downloading
      */
     private fun setDownloading() {
-        progressContainer.isVisible = true
-        progressBar.isVisible = true
+        if (!viewer.config.einkMode) {
+            progressContainer.isVisible = true
+            progressBar.isVisible = true
+        }
         removeErrorLayout()
     }
 
@@ -234,8 +240,10 @@ class WebtoonPageHolder(
      * Called when the page is ready.
      */
     private suspend fun setImage() {
-        progressContainer.isVisible = true
-        progressBar.isVisible = true
+        if (!viewer.config.einkMode) {
+            progressContainer.isVisible = true
+            progressBar.isVisible = true
+        }
         removeErrorLayout()
 
         val streamFn = page?.stream ?: return
