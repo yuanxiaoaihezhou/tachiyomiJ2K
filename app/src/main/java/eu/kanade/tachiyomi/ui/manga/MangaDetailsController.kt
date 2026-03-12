@@ -1694,8 +1694,7 @@ class MangaDetailsController :
             chipGroup.startActionMode(actionModeCallback, android.view.ActionMode.TYPE_FLOATING)
     }
 
-    override fun customActionMode(view: TextView): android.view.ActionMode.Callback =
-        FloatingMangaDetailsActionModeCallback(view, false, closeMode = false)
+    override fun customActionMode(view: TextView): android.view.ActionMode.Callback = FloatingMangaDetailsActionModeCallback(view, false, closeMode = false)
 
     override fun showChapterFilter() {
         ChaptersSortBottomSheet(this).show()

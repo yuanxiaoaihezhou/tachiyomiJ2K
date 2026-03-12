@@ -125,11 +125,9 @@ abstract class HttpSource : CatalogueSource {
                 popularMangaParse(response)
             }
 
-    fun getExtension(extensionManager: ExtensionManager? = null): Extension.Installed? =
-        (extensionManager ?: Injekt.get()).installedExtensionsFlow.value.find { it.sources.contains(this) }
+    fun getExtension(extensionManager: ExtensionManager? = null): Extension.Installed? = (extensionManager ?: Injekt.get()).installedExtensionsFlow.value.find { it.sources.contains(this) }
 
-    fun extOnlyHasAllLanguage(extensionManager: ExtensionManager? = null) =
-        getExtension(extensionManager)?.sources?.all { it.lang == "all" } ?: true
+    fun extOnlyHasAllLanguage(extensionManager: ExtensionManager? = null) = getExtension(extensionManager)?.sources?.all { it.lang == "all" } ?: true
 
     /**
      * Returns the request for the popular manga given the page.

@@ -87,8 +87,7 @@ class ExtensionDetailsController(
         },
     )
 
-    override fun createBinding(inflater: LayoutInflater) =
-        ExtensionDetailControllerBinding.inflate(inflater.cloneInContext(getPreferenceThemeContext()))
+    override fun createBinding(inflater: LayoutInflater) = ExtensionDetailControllerBinding.inflate(inflater.cloneInContext(getPreferenceThemeContext()))
 
     override val presenter = ExtensionDetailsPresenter(args.getString(PKGNAME_KEY)!!)
 

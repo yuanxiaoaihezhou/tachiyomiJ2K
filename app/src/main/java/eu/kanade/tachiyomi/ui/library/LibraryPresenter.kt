@@ -834,7 +834,9 @@ class LibraryPresenter(
         return items to hiddenItems
     }
 
-    private fun getCustomMangaItems(libraryManga: List<LibraryManga>): Pair<
+    private fun getCustomMangaItems(
+        libraryManga: List<LibraryManga>,
+    ): Pair<
         List<LibraryItem>,
         List<Category>,
     > {

@@ -77,21 +77,17 @@ interface Manga : SManga {
     val usesLocalFilter: Boolean
         get() = chapter_flags and CHAPTER_FILTER_LOCAL_MASK == CHAPTER_FILTER_LOCAL
 
-    fun sortDescending(preferences: PreferencesHelper): Boolean =
-        if (usesLocalSort) sortDescending else preferences.chaptersDescAsDefault().get()
+    fun sortDescending(preferences: PreferencesHelper): Boolean = if (usesLocalSort) sortDescending else preferences.chaptersDescAsDefault().get()
 
     fun chapterOrder(preferences: PreferencesHelper): Int = if (usesLocalSort) sorting else preferences.sortChapterOrder().get()
 
     fun readFilter(preferences: PreferencesHelper): Int = if (usesLocalFilter) readFilter else preferences.filterChapterByRead().get()
 
-    fun downloadedFilter(preferences: PreferencesHelper): Int =
-        if (usesLocalFilter) downloadedFilter else preferences.filterChapterByDownloaded().get()
+    fun downloadedFilter(preferences: PreferencesHelper): Int = if (usesLocalFilter) downloadedFilter else preferences.filterChapterByDownloaded().get()
 
-    fun bookmarkedFilter(preferences: PreferencesHelper): Int =
-        if (usesLocalFilter) bookmarkedFilter else preferences.filterChapterByBookmarked().get()
+    fun bookmarkedFilter(preferences: PreferencesHelper): Int = if (usesLocalFilter) bookmarkedFilter else preferences.filterChapterByBookmarked().get()
 
-    fun hideChapterTitle(preferences: PreferencesHelper): Boolean =
-        if (usesLocalFilter) hideChapterTitles else preferences.hideChapterTitlesByDefault().get()
+    fun hideChapterTitle(preferences: PreferencesHelper): Boolean = if (usesLocalFilter) hideChapterTitles else preferences.hideChapterTitlesByDefault().get()
 
     fun showChapterTitle(defaultShow: Boolean): Boolean = chapter_flags and CHAPTER_DISPLAY_MASK == CHAPTER_DISPLAY_NUMBER
 
@@ -208,8 +204,7 @@ interface Manga : SManga {
 
     fun isMangaTag(tag: String): Boolean = tag in listOf("manga", "манга", "jp") || tag.startsWith("japanese")
 
-    fun isManhuaTag(tag: String): Boolean =
-        tag in listOf("manhua", "маньхуа", "cn", "hk", "zh-Hans", "zh-Hant") || tag.startsWith("chinese")
+    fun isManhuaTag(tag: String): Boolean = tag in listOf("manhua", "маньхуа", "cn", "hk", "zh-Hans", "zh-Hant") || tag.startsWith("chinese")
 
     fun isLongStrip(): Boolean {
         val currentTags =

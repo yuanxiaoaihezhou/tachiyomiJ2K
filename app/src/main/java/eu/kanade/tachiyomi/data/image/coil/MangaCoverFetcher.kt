@@ -237,8 +237,7 @@ class MangaCoverFetcher(
         }
     }
 
-    private fun readFromDiskCache(): DiskCache.Snapshot? =
-        if (options.diskCachePolicy.readEnabled) diskCacheLazy.value[diskCacheKey!!] else null
+    private fun readFromDiskCache(): DiskCache.Snapshot? = if (options.diskCachePolicy.readEnabled) diskCacheLazy.value[diskCacheKey!!] else null
 
     private fun writeToDiskCache(
         snapshot: DiskCache.Snapshot?,

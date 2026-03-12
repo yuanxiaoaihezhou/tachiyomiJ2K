@@ -275,8 +275,7 @@ class StatsDetailsChartLayout
                 try {
                     val newValueFormatter =
                         object : ValueFormatter() {
-                            override fun getFormattedValue(value: Float) =
-                                if (touchEnabled) value.toLong().getReadDuration() else value.toInt().toString()
+                            override fun getFormattedValue(value: Float) = if (touchEnabled) value.toLong().getReadDuration() else value.toInt().toString()
                         }
 
                     val barData = BarData(barDataSet)
@@ -297,8 +296,7 @@ class StatsDetailsChartLayout
                         if (!xAxisLabel.isNullOrEmpty()) {
                             valueFormatter =
                                 object : ValueFormatter() {
-                                    override fun getFormattedValue(value: Float): String =
-                                        if (value < xAxisLabel.size) xAxisLabel[value.toInt()] else ""
+                                    override fun getFormattedValue(value: Float): String = if (value < xAxisLabel.size) xAxisLabel[value.toInt()] else ""
                                 }
                         }
                     }
