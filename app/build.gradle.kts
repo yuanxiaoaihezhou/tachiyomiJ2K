@@ -100,7 +100,8 @@ android {
 
     productFlavors {
         create("standard") {
-            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
+            // Disabled: updater checks upstream repo for updates
+            buildConfigField("Boolean", "INCLUDE_UPDATER", "false")
         }
         create("dev") {
             androidResources.localeFilters.clear()
