@@ -2,6 +2,7 @@ package eu.kanade.tachiyomi.ui.reader.viewer
 
 import com.fredporciuncula.flow.preferences.Preference
 import eu.kanade.tachiyomi.data.preference.PreferencesHelper
+import eu.kanade.tachiyomi.util.system.EInkHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -26,6 +27,8 @@ abstract class ViewerConfig(
     var volumeKeysInverted = false
     var alwaysShowChapterTransition = true
 
+    var einkMode = false
+
     var navigationOverlayForNewUser = false
     var navigationMode = 0
         protected set
@@ -40,7 +43,25 @@ abstract class ViewerConfig(
 
         preferences
             .doubleTapAnimSpeed()
-            .register({ doubleTapAnimDuration = it })
+            .register({
+                doubleTapAnimDuration = if (einkMode) {
+                    EInkHelper.getRecommendedAnimDuration(true) ?: it
+                } else {
+                    it
+                }
+            })
+
+        preferences
+            .einkMode()
+            .register({
+                einkMode = it
+                // When e-ink mode changes, update animation duration
+                doubleTapAnimDuration = if (it) {
+                    EInkHelper.getRecommendedAnimDuration(true) ?: 1
+                } else {
+                    preferences.doubleTapAnimSpeed().get()
+                }
+            })
 
         preferences
             .readWithVolumeKeys()

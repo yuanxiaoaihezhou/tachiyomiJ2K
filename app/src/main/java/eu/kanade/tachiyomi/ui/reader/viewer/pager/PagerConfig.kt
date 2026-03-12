@@ -72,7 +72,14 @@ class PagerConfig(
     var autoSplitPages = preferences.automaticSplitsPage().get()
 
     init {
-        preferences.pageTransitions().register({ usePageTransitions = it })
+        preferences.pageTransitions().register({
+            usePageTransitions = if (einkMode) false else it
+        })
+
+        preferences.einkMode().register({
+            // When e-ink mode changes, update page transitions
+            usePageTransitions = if (it) false else preferences.pageTransitions().get()
+        })
 
         preferences.fullscreen().register({ isFullscreen = it })
 

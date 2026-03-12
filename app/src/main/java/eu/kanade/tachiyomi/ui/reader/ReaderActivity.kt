@@ -110,6 +110,7 @@ import eu.kanade.tachiyomi.ui.webview.WebViewActivity
 import eu.kanade.tachiyomi.util.chapter.ChapterUtil.Companion.preferredChapterName
 import eu.kanade.tachiyomi.util.storage.getUriCompat
 import eu.kanade.tachiyomi.util.system.ThemeUtil
+import eu.kanade.tachiyomi.util.system.EInkHelper
 import eu.kanade.tachiyomi.util.system.contextCompatColor
 import eu.kanade.tachiyomi.util.system.contextCompatDrawable
 import eu.kanade.tachiyomi.util.system.dpToPx
@@ -280,8 +281,8 @@ class ReaderActivity : BaseActivity<ReaderActivityBinding>() {
      * Called when the activity is created. Initializes the view model and configuration.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Setup shared element transitions
-        if (intent.extras?.getString(TRANSITION_NAME) != null) {
+        // Setup shared element transitions (skip for e-ink mode to reduce ghosting)
+        if (intent.extras?.getString(TRANSITION_NAME) != null && !preferences.einkMode().get()) {
             window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
             findViewById<View>(android.R.id.content)?.let { contentView ->
                 MainActivity.chapterIdToExitTo = 0L
@@ -2095,7 +2096,13 @@ class ReaderActivity : BaseActivity<ReaderActivityBinding>() {
 
             preferences.fullscreen().asImmediateFlowIn(scope) { setFullscreen(it) }
 
-            preferences.keepScreenOn().asImmediateFlowIn(scope) { setKeepScreenOn(it) }
+            preferences.keepScreenOn().asImmediateFlowIn(scope) {
+                setKeepScreenOn(EInkHelper.shouldKeepScreenOn(preferences.einkMode().get(), it))
+            }
+
+            preferences.einkMode().asImmediateFlowIn(scope) { einkEnabled ->
+                setKeepScreenOn(EInkHelper.shouldKeepScreenOn(einkEnabled, preferences.keepScreenOn().get()))
+            }
 
             preferences.customBrightness().asImmediateFlowIn(scope) { setCustomBrightness(it) }
 

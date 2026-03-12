@@ -236,4 +236,6 @@ object PreferenceKeys {
     const val hideChapterTitles = "hide_chapter_titles"
 
     const val chaptersDescAsDefault = "chapters_desc_as_default"
+
+    const val einkMode = "pref_eink_mode"
 }

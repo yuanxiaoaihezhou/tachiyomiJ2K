@@ -33,6 +33,7 @@ open class WebtoonRecyclerView
         private var firstVisibleItemPosition = 0
         private var lastVisibleItemPosition = 0
         private var currentScale = DEFAULT_RATE
+        var einkMode = false
         var canZoomOut = false
             set(value) {
                 field = value
@@ -125,7 +126,7 @@ open class WebtoonRecyclerView
                 setScaleRate(animation.animatedValue as Float)
             }
             animatorSet.playTogether(translationXAnimator, translationYAnimator, scaleAnimator)
-            animatorSet.duration = ANIMATOR_DURATION_TIME.toLong()
+            animatorSet.duration = if (einkMode) EINK_ANIMATOR_DURATION_TIME.toLong() else ANIMATOR_DURATION_TIME.toLong()
             animatorSet.interpolator = DecelerateInterpolator()
             animatorSet.start()
             animatorSet.addListener(
@@ -171,7 +172,7 @@ open class WebtoonRecyclerView
                     newX?.let { x(it) }
                     newY?.let { y(it) }
                 }.setInterpolator(DecelerateInterpolator())
-                .setDuration(400)
+                .setDuration(if (einkMode) EINK_ANIMATOR_DURATION_TIME.toLong() else 400)
                 .start()
 
             return true
@@ -354,6 +355,7 @@ open class WebtoonRecyclerView
 
         private companion object {
             const val ANIMATOR_DURATION_TIME = 200
+            const val EINK_ANIMATOR_DURATION_TIME = 1
             const val MIN_RATE = 0.5f
             const val DEFAULT_RATE = 1f
             const val MAX_SCALE_RATE = 3f

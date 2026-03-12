@@ -27,6 +27,17 @@ class SettingsReaderController : SettingsController() {
             titleRes = R.string.reader
 
             preferenceCategory {
+                titleRes = R.string.eink
+
+                switchPreference {
+                    key = Keys.einkMode
+                    titleRes = R.string.eink_mode
+                    summaryRes = R.string.eink_mode_summary
+                    defaultValue = false
+                }
+            }
+
+            preferenceCategory {
                 titleRes = R.string.general
                 intListPreference(activity) {
                     key = Keys.defaultReadingMode
