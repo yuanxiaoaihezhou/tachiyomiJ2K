@@ -63,8 +63,17 @@ jobs:
             echo "VERSION_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
           fi
 
+      - name: Check signing key availability
+        if: env.VERSION_TAG != ''
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        run: |
+          if [ -n "$SIGNING_KEY" ]; then
+            echo "HAS_SIGNING_KEY=true" >> $GITHUB_ENV
+          fi
+
       - name: Sign APK
-        if: env.VERSION_TAG != '' && secrets.SIGNING_KEY != ''
+        if: env.VERSION_TAG != '' && env.HAS_SIGNING_KEY == 'true'
         uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: app/build/outputs/apk/standard/release
@@ -74,7 +83,7 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Prepare signed release artifacts
-        if: env.VERSION_TAG != '' && secrets.SIGNING_KEY != ''
+        if: env.VERSION_TAG != '' && env.HAS_SIGNING_KEY == 'true'
         run: |
           set -e
 
