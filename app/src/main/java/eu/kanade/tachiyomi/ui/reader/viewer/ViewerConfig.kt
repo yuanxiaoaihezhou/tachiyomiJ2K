@@ -46,11 +46,12 @@ abstract class ViewerConfig(
         preferences
             .doubleTapAnimSpeed()
             .register({
-                doubleTapAnimDuration = if (einkMode) {
-                    EInkHelper.getRecommendedAnimDuration(true, it)
-                } else {
-                    it
-                }
+                doubleTapAnimDuration =
+                    if (einkMode) {
+                        EInkHelper.getRecommendedAnimDuration(true, it)
+                    } else {
+                        it
+                    }
             })
 
         preferences

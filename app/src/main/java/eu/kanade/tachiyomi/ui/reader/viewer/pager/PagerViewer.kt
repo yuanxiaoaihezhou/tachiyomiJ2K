@@ -514,14 +514,16 @@ abstract class PagerViewer(
      */
     private fun getOrCreateFlashOverlay(): View {
         flashOverlay?.let { return it }
-        val overlay = View(activity).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-            )
-            setBackgroundColor(Color.BLACK)
-            visibility = View.GONE
-        }
+        val overlay =
+            View(activity).apply {
+                layoutParams =
+                    ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                    )
+                setBackgroundColor(Color.BLACK)
+                visibility = View.GONE
+            }
         // Add to the pager's parent (the viewer container in ReaderActivity)
         (pager.parent as? ViewGroup)?.addView(overlay) ?: activity.binding.viewerContainer.addView(overlay)
         overlay.bringToFront()
