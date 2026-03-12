@@ -25,7 +25,7 @@ object PreferenceKeys {
 
     const val TRUE_COLOR = "pref_true_color_key"
 
-    const val FULLSCREEN = "FULLSCREEN"
+    const val FULLSCREEN = "fullscreen"
 
     const val KEEP_SCREEN_ON = "pref_keep_screen_on_key"
 
