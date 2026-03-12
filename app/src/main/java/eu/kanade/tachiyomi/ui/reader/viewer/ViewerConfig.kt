@@ -45,7 +45,7 @@ abstract class ViewerConfig(
             .doubleTapAnimSpeed()
             .register({
                 doubleTapAnimDuration = if (einkMode) {
-                    EInkHelper.getRecommendedAnimDuration(true) ?: it
+                    EInkHelper.getRecommendedAnimDuration(true, it)
                 } else {
                     it
                 }
@@ -56,11 +56,7 @@ abstract class ViewerConfig(
             .register({
                 einkMode = it
                 // When e-ink mode changes, update animation duration
-                doubleTapAnimDuration = if (it) {
-                    EInkHelper.getRecommendedAnimDuration(true) ?: 1
-                } else {
-                    preferences.doubleTapAnimSpeed().get()
-                }
+                doubleTapAnimDuration = EInkHelper.getRecommendedAnimDuration(it, preferences.doubleTapAnimSpeed().get())
             })
 
         preferences

@@ -101,12 +101,12 @@ object EInkHelper {
         }
 
     /**
-     * Returns the recommended animation duration scale for e-ink devices.
-     * For e-ink: animations should be minimal or disabled.
-     * For regular devices: returns null (use default).
+     * Returns the recommended animation duration for e-ink devices.
+     * For e-ink: returns 1ms (near-instant, avoids 0 which may break some views).
+     * For regular devices: returns the provided default value.
      */
-    fun getRecommendedAnimDuration(einkModeEnabled: Boolean): Int? =
-        if (einkModeEnabled) 1 else null // 1ms = near-instant, 0 may break some views
+    fun getRecommendedAnimDuration(einkModeEnabled: Boolean, default: Int = 500): Int =
+        if (einkModeEnabled) 1 else default // 1ms = near-instant, 0 may break some views
 
     /**
      * Whether page transitions should be used.
@@ -130,11 +130,12 @@ object EInkHelper {
         if (einkModeEnabled) userPreference.coerceAtMost(4) else userPreference
 
     /**
-     * Apply e-ink optimized window flags to reduce unnecessary GPU rendering.
+     * Apply e-ink optimized window flags.
+     * Ensures system bar backgrounds are drawn by the window rather than the system,
+     * which helps reduce visual artifacts on e-ink displays.
      */
     fun applyEInkWindowFlags(window: android.view.Window, einkModeEnabled: Boolean) {
         if (einkModeEnabled) {
-            // Disable hardware acceleration overlay layers to reduce ghosting
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS,
                 WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS,
