@@ -83,7 +83,7 @@ class ShizukuInstaller(
 
     init {
         Shizuku.addBinderDeadListener(shizukuDeadListener)
-        require(Shizuku.pingBinder() && (context.isPackageInstalled(shizukuPkgName) || Sui.isSui())) {
+        require(Shizuku.pingBinder() && (context.isPackageInstalled(SHIZUKU_PKG_NAME) || Sui.isSui())) {
             finishedQueue(this)
             context.getString(R.string.ext_installer_shizuku_stopped)
         }
