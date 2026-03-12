@@ -100,6 +100,7 @@ android {
 
     productFlavors {
         create("standard") {
+            // Disabled: updater checks upstream repo for updates
             buildConfigField("Boolean", "INCLUDE_UPDATER", "false")
         }
         create("dev") {
