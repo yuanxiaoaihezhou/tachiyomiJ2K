@@ -81,7 +81,8 @@ class PagerConfig(
             usePageTransitions = if (it) false else preferences.pageTransitions().get()
         })
 
-        preferences.einkRefreshMode()
+        preferences
+            .einkRefreshMode()
             .asFlow()
             .drop(1)
             .onEach {
