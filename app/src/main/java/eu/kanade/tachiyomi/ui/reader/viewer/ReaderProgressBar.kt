@@ -67,6 +67,11 @@ class ReaderProgressBar
         private val ovalRect = RectF()
 
         /**
+         * Whether e-ink mode is active, to reduce animations.
+         */
+        var einkMode = false
+
+        /**
          * The rotation animation to use while the progress bar is visible.
          */
         private val rotationAnimation by lazy {
@@ -151,6 +156,7 @@ class ReaderProgressBar
          * Starts the rotation animation if needed.
          */
         private fun startAnimation() {
+            if (einkMode) return
             if (visibility != View.VISIBLE || windowVisibility != View.VISIBLE || animation != null) {
                 return
             }
@@ -172,7 +178,7 @@ class ReaderProgressBar
         fun hide(animate: Boolean = false) {
             if (visibility == View.GONE) return
 
-            if (!animate) {
+            if (!animate || einkMode) {
                 visibility = View.GONE
             } else {
                 ObjectAnimator.ofFloat(this, "alpha", 1f, 0f).apply {
@@ -219,6 +225,11 @@ class ReaderProgressBar
          * canvas.
          */
         private fun setRealProgress(progress: Int) {
+            if (einkMode) {
+                sweepAngle = calcSweepAngleFromProgress(progress)
+                invalidate()
+                return
+            }
             ValueAnimator.ofFloat(sweepAngle, calcSweepAngleFromProgress(progress)).apply {
                 interpolator = DecelerateInterpolator()
                 duration = 250

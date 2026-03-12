@@ -21,6 +21,7 @@ import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.data.preference.PreferencesHelper
 import eu.kanade.tachiyomi.databinding.ReaderErrorBinding
 import eu.kanade.tachiyomi.source.model.Page
+import eu.kanade.tachiyomi.ui.reader.model.EInkRefreshPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
 import eu.kanade.tachiyomi.ui.reader.settings.ReaderBackgroundColor
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderErrorView
@@ -123,29 +124,35 @@ class PagerPageHolder(
     private var scope = MainScope()
 
     init {
-        addView(progressBar)
-        if (viewer.config.hingeGapSize > 0) {
-            progressBar.updateLayoutParams<MarginLayoutParams> {
-                marginStart = ((context.resources.displayMetrics.widthPixels) / 2 + viewer.config.hingeGapSize) / 2
+        if (page is EInkRefreshPage) {
+            // For e-ink refresh pages, display a white background and skip image loading
+            setBackgroundColor(Color.WHITE)
+            progressBar.isVisible = false
+        } else {
+            addView(progressBar)
+            if (viewer.config.hingeGapSize > 0) {
+                progressBar.updateLayoutParams<MarginLayoutParams> {
+                    marginStart = ((context.resources.displayMetrics.widthPixels) / 2 + viewer.config.hingeGapSize) / 2
+                }
             }
-        }
-        launchLoadJob()
-        setBackgroundColor(
-            when (val theme = viewer.config.readerTheme) {
-                ReaderBackgroundColor.SMART_THEME.prefValue -> Color.TRANSPARENT
-                else -> ThemeUtil.readerBackgroundColor(theme)
-            },
-        )
-        progressBar.foregroundTintList =
-            ColorStateList.valueOf(
-                context.getResourceColor(
-                    if (isInvertedFromTheme()) {
-                        R.attr.colorPrimaryInverse
-                    } else {
-                        R.attr.colorPrimary
-                    },
-                ),
+            launchLoadJob()
+            setBackgroundColor(
+                when (val theme = viewer.config.readerTheme) {
+                    ReaderBackgroundColor.SMART_THEME.prefValue -> Color.TRANSPARENT
+                    else -> ThemeUtil.readerBackgroundColor(theme)
+                },
             )
+            progressBar.foregroundTintList =
+                ColorStateList.valueOf(
+                    context.getResourceColor(
+                        if (isInvertedFromTheme()) {
+                            R.attr.colorPrimaryInverse
+                        } else {
+                            R.attr.colorPrimary
+                        },
+                    ),
+                )
+        }
     }
 
     override fun onImageLoaded() {

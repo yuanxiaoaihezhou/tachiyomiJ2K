@@ -145,6 +145,9 @@ class WebtoonViewer(
         }
         config.navigationModeInvertedListener = { activity.binding.navigationOverlay.showNavigationAgain() }
 
+        // Propagate e-ink mode to the recycler view
+        recycler.einkMode = config.einkMode
+
         frame.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
         frame.addView(recycler)
     }

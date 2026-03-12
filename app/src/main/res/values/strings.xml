@@ -449,6 +449,15 @@
     <string name="dodge_lighten">Dodge / Lighten</string>
     <string name="burn_darken">Burn / Darken</string>
     <string name="keep_screen_on">Keep screen on</string>
+    <string name="eink">E-Ink Display</string>
+    <string name="eink_mode">E-Ink mode</string>
+    <string name="eink_mode_summary">Optimizes for e-ink displays (Kaleido 3 / Ocean 5c etc.): disables animations, reduces transitions, and saves battery</string>
+    <string name="eink_refresh_mode">E-Ink refresh mode</string>
+    <string name="eink_refresh_mode_default">Default</string>
+    <string name="eink_refresh_mode_flash">Simulated full refresh</string>
+    <string name="eink_refresh_mode_flash_summary">Flashes black/white before rendering the next page to reduce ghosting</string>
+    <string name="eink_refresh_mode_insert">Insert blank pages</string>
+    <string name="eink_refresh_mode_insert_summary">Inserts white pages between content pages to clear ghosting</string>
     <string name="skip_read_chapters">Skip chapters marked read</string>
     <string name="skip_filtered_chapters">Skip filtered chapters</string>
     <string name="skip_dupe_chapters">Skip duplicate chapters</string>
