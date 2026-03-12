@@ -164,10 +164,9 @@ open class App :
         }
 
         val currentLocales = AppCompatDelegate.getApplicationLocales()
-        if (currentLocales.size > 0) {
-            val tag = currentLocales[0]?.toLanguageTag()
+        if (!currentLocales.isEmpty) {
             val migratedTag =
-                when (tag) {
+                when (currentLocales[0]?.toLanguageTag()) {
                     "zh-Hans" -> "zh-CN"
                     "zh-Hant" -> "zh-TW"
                     else -> null
