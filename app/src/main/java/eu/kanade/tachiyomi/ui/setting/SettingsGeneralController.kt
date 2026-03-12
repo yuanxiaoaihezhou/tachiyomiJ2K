@@ -170,7 +170,12 @@ class SettingsGeneralController : SettingsController() {
                                             "http://schemas.android.com/apk/res/android",
                                             "name",
                                         ) ?: continue
-                                    if (availLocales.contains(Locale.forLanguageTag(locale))) {
+                                    val parsedLocale = Locale.forLanguageTag(locale)
+                                    if (availLocales.any {
+                                            it.language == parsedLocale.language &&
+                                                it.country == parsedLocale.country
+                                        }
+                                    ) {
                                         locales.add(locale)
                                     }
                                 }
