@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -65,6 +66,8 @@ open class App :
         }
 
         Injekt.importModule(AppModule(this))
+
+        migrateChineseLocaleIfNeeded()
 
         CoilSetup(this)
         setupNotificationChannels()
@@ -142,6 +145,39 @@ open class App :
 
     protected open fun setupNotificationChannels() {
         Notifications.createChannels(this)
+    }
+
+    private fun migrateChineseLocaleIfNeeded() {
+        val appLang = preferences.appLanguage().get()
+        val migratedLang =
+            when (appLang) {
+                "zh-Hans" -> "zh-CN"
+                "zh-Hant" -> "zh-TW"
+                else -> null
+            }
+        if (migratedLang != null) {
+            preferences.appLanguage().set(migratedLang)
+            AppCompatDelegate.setApplicationLocales(
+                LocaleListCompat.forLanguageTags(migratedLang),
+            )
+            return
+        }
+
+        val currentLocales = AppCompatDelegate.getApplicationLocales()
+        if (currentLocales.size > 0) {
+            val tag = currentLocales[0]?.toLanguageTag()
+            val migratedTag =
+                when (tag) {
+                    "zh-Hans" -> "zh-CN"
+                    "zh-Hant" -> "zh-TW"
+                    else -> null
+                }
+            if (migratedTag != null) {
+                AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(migratedTag),
+                )
+            }
+        }
     }
 
     private inner class DisableIncognitoReceiver : BroadcastReceiver() {
